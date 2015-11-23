@@ -19,3 +19,4 @@ worlds
 logs
 config
 dependency-reduced-pom.xml
+.idea

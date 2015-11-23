@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 public class SpeedCommand extends BukkitCommand {
 
-	protected SpeedCommand() {
+	public SpeedCommand() {
 		super("gsspeed");
 		this.description = "Sets the speed of a player or yourself from";
 		this.usageMessage = "/speed <player> <your speed>";
