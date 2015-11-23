@@ -77,8 +77,8 @@ public class SpeedCommand extends BukkitCommand {
 					}
 				}
 				if (args.length == 2) {
-					if (pl.isOnGround()) {
-						Player targetpl = Bukkit.getServer().getPlayer(args[0]);
+					Player targetpl = Bukkit.getServer().getPlayer(args[0]);
+					if (targetpl.isOnGround()) {
 						if (targetpl == null) {
 							pl.sendMessage(ChatColor.RED + "Player not found!");
 						} else {
@@ -109,8 +109,7 @@ public class SpeedCommand extends BukkitCommand {
 							}
 						}
 					}
-					if (pl.isFlying()) {
-						Player targetpl = Bukkit.getServer().getPlayer(args[0]);
+					if (targetpl.isFlying()) {
 						float flyingSpeed = 0.0F;
 						try {
 							flyingSpeed = Float.parseFloat(args[1]);
