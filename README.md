@@ -36,7 +36,7 @@ cd GlowstoneMinusMinus
 ./setup.sh
 ```
 
-The final jar will be placed in `target/` named `glowstone++-1.8.8-SNAPSHOT.jar` (Working on getting that changed ;)). 
+The final jar will be placed in `target/` named `glowstone--_1.8.8-SNAPSHOT.jar`. 
 
 ##Downloads
 
@@ -45,9 +45,9 @@ The final jar will be placed in `target/` named `glowstone++-1.8.8-SNAPSHOT.jar`
 ##Running
 
 Running Glowstone-- is simple because its dependencies are shaded into the output
-jar at compile time. Simply execute `java -jar glowstone++.jar` along with any
+jar at compile time. Simply execute `java -jar glowstone--_{Version}.jar` along with any
 extra JVM options desired. A variety of command-line options are also available -
-run `java -jar glowstone++.jar --help` for more information.
+run `java -jar glowstone--_{Version}.jar --help` for more information.
 
 By default, configuration is stored in the `config/` subdirectory and logs
 are stored in the `logs/` subdirectory. The main configuration file is
