@@ -91,7 +91,7 @@
     </dependencies>
 
     <build>
-        <finalName>glowstone++-${project.version}</finalName>
+        <finalName>glowstone--_${project.version}</finalName>
 
         <directory>${project.basedir}/target</directory>
 
@@ -115,7 +115,7 @@
                         <id>git-describe</id>
                         <phase>initialize</phase>
                         <configuration>
-                            <outputPrefix>Glowstone++-git-</outputPrefix>
+                            <outputPrefix>Glowstone--_git-</outputPrefix>
                         </configuration>
                     </execution>
                 </executions>
