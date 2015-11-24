@@ -31,12 +31,12 @@ public class SpeedCommand extends BukkitCommand {
                             playerSpeed = Integer.parseInt(args[0]);
                             if (playerSpeed > 10) {
                                 pl.sendMessage(ChatColor.RED
-                                        + "Error: argument too high! (only up to 10)");
+                                        + "Error: speed too high! (only up to 10)");
                                 return false;
                             }
                             if (playerSpeed < 1) {
                                 pl.sendMessage(ChatColor.RED
-                                        + "Error: argument too low! (only down to 1)");
+                                        + "Error: speed too low! (only down to 1)");
                                 return false;
                             }
                             switch (playerSpeed) {
@@ -91,7 +91,7 @@ public class SpeedCommand extends BukkitCommand {
                             }
                             if (playerFlyingSpeed < 1) {
                                 pl.sendMessage(ChatColor.RED
-                                        + "Error: argument too low! (only down to 1)");
+                                        + "Error: speed too low! (only down to 1)");
                                 return false;
                             }
                             switch (playerFlyingSpeed) {
@@ -142,20 +142,51 @@ public class SpeedCommand extends BukkitCommand {
                         if (targetpl == null) {
                             pl.sendMessage(ChatColor.RED + "Player not found!");
                         } else {
-                            float pspeed = 0.0F;
+                            int pspeed = 0;
                             try {
-                                pspeed = Float.parseFloat(args[1]);
-                                if (pspeed > 1.0F) {
+                                pspeed = Integer.parseInt(args[1]);
+                                if (pspeed > 10) {
                                     pl.sendMessage(ChatColor.RED
-                                            + "Error: argument too high! (only up to 1.0F)");
+                                            + "Error: speed too high! (only up to 10)");
                                     return false;
                                 }
-                                if (pspeed < -1.0F) {
+                                if (pspeed < 1) {
                                     pl.sendMessage(ChatColor.RED
-                                            + "Error: argument too less! (only up to -1.0F)");
+                                            + "Error: speed too low! (only down to 1)");
                                     return false;
                                 }
-                                targetpl.setWalkSpeed(pspeed);
+                                switch (pspeed) {
+                                    case 10:
+                                        targetpl.setWalkSpeed(0.1F);
+                                        break;
+                                    case 9:
+                                        targetpl.setWalkSpeed(0.12F);
+                                        break;
+                                    case 8:
+                                        targetpl.setWalkSpeed(0.14F);
+                                        break;
+                                    case 7:
+                                        targetpl.setWalkSpeed(0.16F);
+                                        break;
+                                    case 6:
+                                        targetpl.setWalkSpeed(0.18F);
+                                        break;
+                                    case 5:
+                                        targetpl.setWalkSpeed(0.2F);
+                                        break;
+                                    case 4:
+                                        targetpl.setWalkSpeed(0.3F);
+                                        break;
+                                    case 3:
+                                        targetpl.setWalkSpeed(0.4F);
+                                        break;
+                                    case 2:
+                                        targetpl.setWalkSpeed(0.5F);
+                                        break;
+                                    case 1:
+                                        targetpl.setWalkSpeed(0.6F);
+                                        break;
+                                }
                                 targetpl.sendMessage(ChatColor.GREEN
                                         + "Your walkspeed has been modified to "
                                         + pspeed);
@@ -165,25 +196,56 @@ public class SpeedCommand extends BukkitCommand {
                                         + pspeed);
                             } catch (Exception e) {
                                 pl.sendMessage(ChatColor.RED
-                                        + "Error: argument cannot get converted to float!");
+                                        + "Error: invalid speed!");
                             }
                         }
                     }
                     if (targetpl.isFlying()) {
-                        float flyingSpeed = 0.0F;
+                        int flyingSpeed = 0;
                         try {
-                            flyingSpeed = Float.parseFloat(args[1]);
-                            if (flyingSpeed > 1.0F) {
+                            flyingSpeed = Integer.parseInt(args[1]);
+                            if (flyingSpeed > 10) {
                                 pl.sendMessage(ChatColor.RED
-                                        + "Error: argument too high! (only up to 1.0F)");
+                                        + "Error: argument too high! (only up to 10)");
                                 return false;
                             }
-                            if (flyingSpeed < -1.0F) {
+                            if (flyingSpeed < 1) {
                                 pl.sendMessage(ChatColor.RED
-                                        + "Error: argument too less! (only up to -1.0F)");
+                                        + "Error: speed too low! (only down to 1)");
                                 return false;
                             }
-                            targetpl.setFlySpeed(flyingSpeed);
+                            switch (flyingSpeed) {
+                                case 10:
+                                    targetpl.setFlySpeed(0.5F);
+                                    break;
+                                case 9:
+                                    targetpl.setFlySpeed(0.45F);
+                                    break;
+                                case 8:
+                                    targetpl.setFlySpeed(0.4F);
+                                    break;
+                                case 7:
+                                    targetpl.setFlySpeed(0.35F);
+                                    break;
+                                case 6:
+                                    targetpl.setFlySpeed(0.25F);
+                                    break;
+                                case 5:
+                                    targetpl.setFlySpeed(0.1F);
+                                    break;
+                                case 4:
+                                    targetpl.setFlySpeed(0.08F);
+                                    break;
+                                case 3:
+                                    targetpl.setFlySpeed(0.06F);
+                                    break;
+                                case 2:
+                                    targetpl.setFlySpeed(0.04F);
+                                    break;
+                                case 1:
+                                    targetpl.setFlySpeed(0.02F);
+                                    break;
+                            }
                             targetpl.sendMessage(ChatColor.GREEN
                                     + "Your flying speed has been modified to "
                                     + flyingSpeed);
@@ -192,7 +254,7 @@ public class SpeedCommand extends BukkitCommand {
                                     + flyingSpeed);
                         } catch (Exception e) {
                             pl.sendMessage(ChatColor.RED
-                                    + "Error: argument cannot get converted to float!");
+                                    + "Error: invalid speed!");
                         }
 
                     }
