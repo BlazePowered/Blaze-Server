@@ -6,7 +6,7 @@ The most powerful Minecraft server software yet. Built on Glowstone.
 
 ##Download
 
-####[Latest Release](https://drone.io/github.com/BlazePowered/Blaze-Server/files/target/blaze-latest.jar) ####[View All Builds](https://drone.io/github.com/BlazePowered/Blaze-Server/files/)
+####[Latest Release](https://drone.io/github.com/BlazePowered/Blaze-Server/files/target/blaze-latest.jar) [View All Builds](https://drone.io/github.com/BlazePowered/Blaze-Server/files/)
 
 (Warning: builds may be unstable, use at your own risk.)
 
