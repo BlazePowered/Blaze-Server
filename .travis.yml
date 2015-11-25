@@ -25,4 +25,5 @@ deploy:
     secure: mIoSnmip5tGFna14ID6jvteB+shbNPTFDLWyKzwQA02N6KHLPmJXZEdjFOcCdmz3YFzzspevkqZ/D+1o+yQV9URnnefdojncqAHBvrlsmEBl8PzicFA041QS9tXPKw+rEHkUN2AOxbVj3tlKO9MQQLoSR9GIJq4Or86AaQJryJuOhzDr7V4S9MouDnHGn6JkZRN9ybmpySAn+dQlb0Lw0yaAyZujZH3Y55B2WvSANBXeafJJmeUtEAmul7LozkumtOPiypX/R1ykrogLQmawGsKtaF/lv/eP9JsUTxWT5S67gO2d83/7WMinH0F+TDSODtpWCpFD6kmBfhppFODF7b8FS/9vPeJhNUGe/geurdMRwl6WCP8jI9uhFViNzIn5+gzS5IBQyK+D6xGfHfFjLXXYCX+Zu0ybS5iOLz0Cpp2+TC5DxmkIMpZadSCK4BYF40+Jr8CsJ4IKnyWe5c+ZZZo2uEP6ZK+Z/NPFn+MLkU5qsBQpwZhaZbOhA/jSwRqTiv/gWgfZ5y2bAPGoOUueH3Y6BVfv0ezCYG31firPNVuLCPnv+/QKCphwIRNwatujlQxQnduFEeMmrMYQokMFjaxoI1xbSHb/KPbZO7kJYg3Nw21agWL0XoOSqA4nzAcL54g3iG5WytvcSExvXRoSLuQefHDWkkUZS6Rm8PFy4jU=
   file: target/blaze-*.jar
   on:
+    tags: true
     repo: BlazePowered/Blaze-Server
