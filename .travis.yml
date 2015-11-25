@@ -1,3 +1,4 @@
+#We aint gonna use travis no mo ~~~
 language: java
 jdk: oraclejdk8
 sudo: false
@@ -27,4 +28,3 @@ deploy:
   on:
     tags: true
     repo: BlazePowered/Blaze-Server
-
