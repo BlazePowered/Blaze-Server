@@ -11,6 +11,7 @@ install:
 
 script:
   # Compile and package JAR and set build properties
+  - "rm -rf ~/.m2/*"
   - "mvn package"
 
 after_success:

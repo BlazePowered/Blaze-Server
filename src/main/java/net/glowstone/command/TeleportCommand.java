@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 public class TeleportCommand extends BukkitCommand {
 
-	protected TeleportCommand() {
+	public TeleportCommand() {
 		super("gseteleport");
 		this.description = "Teleports you to another player, or a player to another player";
 		this.setPermission("glowstone.command.teleport");
