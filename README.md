@@ -6,7 +6,7 @@ The enhanced Glowstone fork with an emphasis on performance, control and compati
 
 ##Download
 
-[Latest Release](http://slyte.io/GS--/Latest/glowstone---1.8.8-SNAPSHOT.jar) 
+[Latest Release](https://travis-ci.org/BlazePowered/Blaze-Server) 
 
 (Warning: builds may be unstable, use at your own risk.)
 
