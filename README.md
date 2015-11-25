@@ -137,7 +137,7 @@ or visit Spigot's [Bukkit Javadocs](https://hub.spigotmc.org/javadocs/bukkit/).
 
 ##Copyright
 
-Glowstone is open-source software released under the MIT license. Please see
+Blaze is open-source software released under the MIT license. Please see
 the `LICENSE` file for details.
 
 Glowkit is open-source software released under the GPL license. Please see
