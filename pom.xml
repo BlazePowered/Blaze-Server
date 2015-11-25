@@ -26,12 +26,10 @@
 
     <repositories>
         <repository>
-          <id>turt2live-repo</id>
-          <name>turt2live-repo</name>
-          <url>
-            http://repo.turt2live.com
-          </url>
-          <layout>default</layout>
+            <id>sonatype</id>
+            <name>Sonatype Nexus</name>
+            <layout>default</layout>
+            <url>https://oss.sonatype.org/content/repositories/public/</url>
         </repository>
     </repositories>
 
