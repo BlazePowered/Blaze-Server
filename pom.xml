@@ -26,10 +26,10 @@
 
     <repositories>
         <repository>
-          <id>codehaus-mule-repo</id>
-          <name>codehaus-mule-repo</name>
+          <id>turt2live-repo</id>
+          <name>turt2live-repo</name>
           <url>
-            https://repository-master.mulesoft.org/nexus/content/groups/public/
+            http://repo.turt2live.com
           </url>
           <layout>default</layout>
         </repository>
