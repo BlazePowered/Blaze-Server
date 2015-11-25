@@ -26,10 +26,12 @@
 
     <repositories>
         <repository>
-            <id>sonatype</id>
-            <name>Sonatype Nexus</name>
-            <layout>default</layout>
-            <url>https://oss.sonatype.org/content/repositories/public/</url>
+          <id>codehaus-mule-repo</id>
+          <name>codehaus-mule-repo</name>
+          <url>
+            https://repository-master.mulesoft.org/nexus/content/groups/public/
+          </url>
+          <layout>default</layout>
         </repository>
     </repositories>
 
