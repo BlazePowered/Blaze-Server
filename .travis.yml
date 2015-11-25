@@ -27,3 +27,4 @@ deploy:
   on:
     tags: true
     repo: BlazePowered/Blaze-Server
+
