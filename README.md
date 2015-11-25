@@ -8,7 +8,7 @@ The enhanced Glowstone fork with an emphasis on performance, control and compati
 
 [Latest Release](http://slyte.io/GS--/Latest/glowstone---1.8.8-SNAPSHOT.jar) 
 
-(Warning: may be unstable, this is only an experiment, use at your own risk)
+(Warning: builds may be unstable, use at your own risk.)
 
 
 Currently the major changes from Glowstone include:
