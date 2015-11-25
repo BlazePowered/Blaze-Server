@@ -9,15 +9,15 @@ before_install:
   - "git submodule update --init --recursive"
 
 install:
+  - "rm -rf ~/.m2/*"
   # Required for fetch_glowkit_pr.sh
-  - "[[ $TRAVIS_PULL_REQUEST == false ]] || sudo apt-get install jq"
+  #- "[[ $TRAVIS_PULL_REQUEST == false ]] || "
 
   # Try to fetch required glowkit PRs, if any.
-  - "./etc/fetch_glowkit_pr.sh $TRAVIS_PULL_REQUEST || echo 'Glowkit build failed - trying to continue anyway'"
+  #- "./etc/fetch_glowkit_pr.sh $TRAVIS_PULL_REQUEST || echo 'Glowkit build failed - trying to continue anyway'"
 
 script:
   # Compile and package JAR and set build properties
-  - "rm -rf ~/.m2/*"
   - "mvn package"
 
 after_success:
