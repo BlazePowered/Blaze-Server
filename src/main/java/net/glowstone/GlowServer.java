@@ -698,8 +698,8 @@ public final class GlowServer implements Server {
         commandMap.register("glowstone", new TitleCommand());
         commandMap.register("glowstone", new BroadcastCommand());
         commandMap.register("glowstone", new SpeedCommand());
-        commandMap.register("glowstone", new TeleportCommand());
-        commandMap.register("glowstone", new SethomeCommand());
+        /**commandMap.register("glowstone", new TeleportCommand());
+        commandMap.register("glowstone", new SethomeCommand()); **/
 
         File folder = new File(config.getString(ServerConfig.Key.PLUGIN_FOLDER));
         if (!folder.isDirectory() && !folder.mkdirs()) {
@@ -1028,7 +1028,7 @@ public final class GlowServer implements Server {
 
     @Override
     public String getName() {
-        return "Glowstone--";
+        return "Blaze";
     }
 
     @Override

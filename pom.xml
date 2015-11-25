@@ -1,16 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>net.glowstoneminusminus</groupId>
-    <artifactId>glowstoneminusminus</artifactId>
+    <groupId>net.blazepowered</groupId>
+    <artifactId>blazepowered</artifactId>
     <version>1.8.8-SNAPSHOT</version>
-    <name>GlowstoneMinusMinus</name>
-    <url>https://github.com/GlowstoneMinusMinus/GlowstoneMinusMinus</url>
+    <name>Blaze-Server</name>
+    <url>https://github.com/BlazePowered/Blaze-Server</url>
 
     <scm>
-        <connection>scm:git:git://github.com/GlowstoneMinusMinus/GlowstoneMinusMinus.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/GlowstoneMinusMinus/GlowstoneMinusMinus.git</developerConnection>
-        <url>https://github.com/GlowstoneMinusMinus/GlowstoneMinusMinus</url>
+        <connection>scm:git:git://github.com/BlazePowered/Blaze-Server.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/BlazePowered/Blaze-Server.git</developerConnection>
+        <url>https://github.com/BlazePowered/Blaze-Server</url>
     </scm>
 
     <properties>
@@ -91,7 +91,7 @@
     </dependencies>
 
     <build>
-        <finalName>glowstone--_${project.version}</finalName>
+        <finalName>blaze-${project.version}</finalName>
 
         <directory>${project.basedir}/target</directory>
 
@@ -115,7 +115,7 @@
                         <id>git-describe</id>
                         <phase>initialize</phase>
                         <configuration>
-                            <outputPrefix>Glowstone--_git-</outputPrefix>
+                            <outputPrefix>Blaze-git-</outputPrefix>
                         </configuration>
                     </execution>
                 </executions>

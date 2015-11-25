@@ -15,9 +15,9 @@ import java.util.Objects;
 public class BroadcastCommand extends BukkitCommand {
 
     public BroadcastCommand() {
-        super("gsbroadcast");
+        super("bzbroadcast");
         this.description = "Announce preset messages server-wide!";
-        this.usageMessage = "/gsbroadcast <1|2|3|4> ...";
+        this.usageMessage = "/bzbroadcast <message> ...";
         this.setPermission("glowstone.command.broadcast");
     }
 

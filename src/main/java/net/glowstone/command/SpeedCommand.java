@@ -9,9 +9,9 @@ import org.bukkit.entity.Player;
 public class SpeedCommand extends BukkitCommand {
 
     public SpeedCommand() {
-        super("gsespeed");
+        super("bzspeed");
         this.description = "Sets the speed of a player or yourself from";
-        this.usageMessage = "/gsespeed <player> <your speed>";
+        this.usageMessage = "/bzspeed <player> <your speed>";
         this.setPermission("glowstone.command.speed");
     }
 
