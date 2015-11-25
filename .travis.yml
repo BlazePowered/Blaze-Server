@@ -1,41 +1,28 @@
-# Source language and JDK version to use
 language: java
 jdk: oraclejdk8
 sudo: false
-
-
-
 before_install:
-  - "git submodule update --init --recursive"
-
+- git submodule update --init --recursive
 install:
-  - "rm -rf ~/.m2/*"
-  # Required for fetch_glowkit_pr.sh
-  #- "[[ $TRAVIS_PULL_REQUEST == false ]] || "
-
-  # Try to fetch required glowkit PRs, if any.
-  #- "./etc/fetch_glowkit_pr.sh $TRAVIS_PULL_REQUEST || echo 'Glowkit build failed - trying to continue anyway'"
-
+- rm -rf ~/.m2/*
 script:
-  # Compile and package JAR and set build properties
-  - "./setup.sh"
-
+- "./setup.sh"
 after_success:
-  # Check if commit is not a pull request, if repo is official, and branch is master, generate and deploy artifacts and reports
-  - "[[ $TRAVIS_PULL_REQUEST == false ]] && [[ $TRAVIS_REPO_SLUG == GlowstoneMC/Glowstone ]] && [[ $TRAVIS_BRANCH == master ]]"
-
-# Notification services
+- "[[ $TRAVIS_PULL_REQUEST == false ]] && [[ $TRAVIS_REPO_SLUG == GlowstoneMC/Glowstone
+  ]] && [[ $TRAVIS_BRANCH == master ]]"
 notifications:
-  # Disable build status email notifications, until the issue with forks is fixed
   email: false
   webhooks:
-    # Send build information and status to Notifico
-    - http://n.tkte.ch/h/1918/S53Phouna3jUVXcxFc3VjQ83
-
-# Environmental system variables
+  - http://n.tkte.ch/h/1918/S53Phouna3jUVXcxFc3VjQ83
 env:
   global:
-    # Make the log output cleaner
-    - TERM=dumb
-    - secure: "WZNE+iO7GxF8qShmApOHx01EYnDObeW0D1t/UJhDLnTHwPdIiHltDgL4l2zb9jmHn21Cy3WCdfFr2XrSmLG+Y+8sFcb6//JvqDW5E79LHNJohDQyJFz3t2gTABrzgS4FVwjRKIw/Hlwdrkukfn4uqs/xxoyl3FAfmSmn2YgFTB0="
-    - secure: "Y5+AXavZO15haO0bWucP4JoX5L8i5vTG2LsSeVCG6oDTAcE/RX5CpCLZxL6BT2qYHDDQL+ICF6ovp0qWjuLq0U3nvQz/7hJMlQDWOiGzX4rVHbljBlZzjNxAnk9GE8o7oYnNjvwtiMWqD930dfJ8mJvqzRKG/Q8Ye0mQ9VlrN/w="
+  - TERM=dumb
+  - secure: WZNE+iO7GxF8qShmApOHx01EYnDObeW0D1t/UJhDLnTHwPdIiHltDgL4l2zb9jmHn21Cy3WCdfFr2XrSmLG+Y+8sFcb6//JvqDW5E79LHNJohDQyJFz3t2gTABrzgS4FVwjRKIw/Hlwdrkukfn4uqs/xxoyl3FAfmSmn2YgFTB0=
+  - secure: Y5+AXavZO15haO0bWucP4JoX5L8i5vTG2LsSeVCG6oDTAcE/RX5CpCLZxL6BT2qYHDDQL+ICF6ovp0qWjuLq0U3nvQz/7hJMlQDWOiGzX4rVHbljBlZzjNxAnk9GE8o7oYnNjvwtiMWqD930dfJ8mJvqzRKG/Q8Ye0mQ9VlrN/w=
+deploy:
+  provider: releases
+  api_key:
+    secure: mIoSnmip5tGFna14ID6jvteB+shbNPTFDLWyKzwQA02N6KHLPmJXZEdjFOcCdmz3YFzzspevkqZ/D+1o+yQV9URnnefdojncqAHBvrlsmEBl8PzicFA041QS9tXPKw+rEHkUN2AOxbVj3tlKO9MQQLoSR9GIJq4Or86AaQJryJuOhzDr7V4S9MouDnHGn6JkZRN9ybmpySAn+dQlb0Lw0yaAyZujZH3Y55B2WvSANBXeafJJmeUtEAmul7LozkumtOPiypX/R1ykrogLQmawGsKtaF/lv/eP9JsUTxWT5S67gO2d83/7WMinH0F+TDSODtpWCpFD6kmBfhppFODF7b8FS/9vPeJhNUGe/geurdMRwl6WCP8jI9uhFViNzIn5+gzS5IBQyK+D6xGfHfFjLXXYCX+Zu0ybS5iOLz0Cpp2+TC5DxmkIMpZadSCK4BYF40+Jr8CsJ4IKnyWe5c+ZZZo2uEP6ZK+Z/NPFn+MLkU5qsBQpwZhaZbOhA/jSwRqTiv/gWgfZ5y2bAPGoOUueH3Y6BVfv0ezCYG31firPNVuLCPnv+/QKCphwIRNwatujlQxQnduFEeMmrMYQokMFjaxoI1xbSHb/KPbZO7kJYg3Nw21agWL0XoOSqA4nzAcL54g3iG5WytvcSExvXRoSLuQefHDWkkUZS6Rm8PFy4jU=
+  file: target/blaze-*.jar
+  on:
+    repo: BlazePowered/Blaze-Server

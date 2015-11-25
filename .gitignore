@@ -15,6 +15,7 @@ target
 !.gitmodules
 !.mailmap
 !.gitattributes
+!.travis.yml
 worlds
 logs
 config
