@@ -1,12 +1,12 @@
 #Blaze-Server [![Build Status](https://travis-ci.org/BlazePowered/Blaze-Server.svg?branch=master)](https://travis-ci.org/BlazePowered/Blaze-Server)
 
-The enhanced Glowstone fork with an emphasis on performance, control and compatibility.
+The most powerful Minecraft server software yet. Built on Glowstone.
 
 ![Built with Love](http://forthebadge.com/images/badges/built-with-love.svg)
 
 ##Download
 
-[Latest Release](https://travis-ci.org/BlazePowered/Blaze-Server) 
+[Latest Release](https://travis-ci.org/BlazePowered/Blaze-Server)
 
 (Warning: builds may be unstable, use at your own risk.)
 
@@ -36,7 +36,7 @@ cd Blaze-Server
 ./setup.sh
 ```
 
-The final jar will be placed in `target/` named `blaze-1.8.8-SNAPSHOT.jar`. 
+The final jar will be placed in `target/` named `blaze-1.8.8-SNAPSHOT.jar`.
 
 ##Downloads
 
@@ -86,7 +86,7 @@ Blaze has a few key advantages over CraftBukkit:
  * Blaze's simplicity affords it a performance improvement over CraftBukkit
    and other servers, making it especially suited for situations where a large
    amount of players must be supported but vanilla game features are not needed.
- 
+
 However, there are several drawbacks:
  * Blaze **is not finished**. Nothing is guaranteed to work, though many things
    are likely to. If in doubt, file an issue.
@@ -96,7 +96,7 @@ However, there are several drawbacks:
  * Blaze is not produced by the Bukkit team, and while we do make an effort
    to produce quality work, Blaze does not undergo the same rigorious testing
    as the Bukkit project.
-   
+
 For a current list of features, [check the wiki](https://github.com/GlowstonePlusPlus/GlowstonePlusPlus/wiki/Current-Features)
 
 ##Docs and Support
@@ -142,4 +142,3 @@ the `LICENSE` file for details.
 
 Glowkit is open-source software released under the GPL license. Please see
 the `LICENSE.txt` file in the Glowkit repository for details.
-
