@@ -18,7 +18,7 @@ install:
 
 script:
   # Compile and package JAR and set build properties
-  - "mvn package"
+  - "./setup.sh"
 
 after_success:
   # Check if commit is not a pull request, if repo is official, and branch is master, generate and deploy artifacts and reports
