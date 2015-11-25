@@ -1,4 +1,4 @@
-#Blaze-Server
+#Blaze-Server https://travis-ci.org/BlazePowered/Blaze-Server.svg?branch=master
 
 The enhanced Glowstone fork with an emphasis on performance, control and compatibility.
 
