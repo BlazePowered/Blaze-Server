@@ -1,4 +1,4 @@
-#Blaze-Server [![Build Status](https://travis-ci.org/BlazePowered/Blaze-Server.svg?branch=master)](https://travis-ci.org/BlazePowered/Blaze-Server)
+#Blaze-Server [![Build Status](https://drone.io/github.com/BlazePowered/Blaze-Server/status.png)](https://drone.io/github.com/BlazePowered/Blaze-Server/latest)
 
 The most powerful Minecraft server software yet. Built on Glowstone.
 
@@ -6,7 +6,7 @@ The most powerful Minecraft server software yet. Built on Glowstone.
 
 ##Download
 
-[Latest Release](https://travis-ci.org/BlazePowered/Blaze-Server)
+[Latest Release](https://drone.io/github.com/BlazePowered/Blaze-Server/files)
 
 (Warning: builds may be unstable, use at your own risk.)
 
