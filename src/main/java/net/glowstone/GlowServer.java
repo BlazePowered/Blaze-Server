@@ -87,6 +87,166 @@ public final class GlowServer implements Server {
      * The protocol version supported by the server.
      */
     public static final int PROTOCOL_VERSION = 47;
+    /**
+     * A list of all the active {@link net.glowstone.net.GlowSession}s.
+     */
+    private final SessionRegistry sessions = new SessionRegistry();
+    /**
+     * The console manager of this server.
+     */
+    private final ConsoleManager consoleManager = new ConsoleManager(this);
+    /**
+     * The services manager of this server.
+     */
+    private final SimpleServicesManager servicesManager = new SimpleServicesManager();
+    /**
+     * The command map of this server.
+     */
+    private final SimpleCommandMap commandMap = new SimpleCommandMap(this);
+    /**
+     * The plugin manager of this server.
+     */
+    private final SimplePluginManager pluginManager = new SimplePluginManager(this, commandMap);
+    /**
+     * The plugin channel messenger for the server.
+     */
+    private final Messenger messenger = new StandardMessenger();
+    /**
+     * The help map for the server.
+     */
+    private final GlowHelpMap helpMap = new GlowHelpMap(this);
+    /**
+     * The scoreboard manager for the server.
+     */
+    private final GlowScoreboardManager scoreboardManager =   new GlowScoreboardManager(this);
+    /**
+     * The crafting manager for this server.
+     */
+    private final CraftingManager craftingManager = new CraftingManager();
+    /**
+     * The configuration for the server.
+     */
+    private final ServerConfig config;
+    /**
+     * The list of OPs on the server.
+     */
+    private final UuidListFile opsList;
+    /**
+     * The list of players whitelisted on the server.
+     */
+    private final UuidListFile whitelist;
+    /**
+     * The BanList for player names.
+     */
+    private final GlowBanList nameBans;
+    /**
+     * The BanList for IP addresses.
+     */
+    private final GlowBanList ipBans;
+    /**
+     * The EntityIdManager for this server.
+     */
+    private final EntityIdManager entityIdManager = new EntityIdManager();
+    /**
+     * The world this server is managing.
+     */
+    private final WorldScheduler worlds = new WorldScheduler();
+    /**
+     * The task scheduler used by this server.
+     */
+    private final GlowScheduler scheduler = new GlowScheduler(this, worlds);
+    /**
+     * The Bukkit UnsafeValues implementation.
+     */
+    private final UnsafeValues unsafeAccess = new GlowUnsafeValues();
+    /**
+     * An empty player array used for deprecated getOnlinePlayers.
+     */
+    private final Player[] emptyPlayerArray = new Player[0];
+    /**
+     * A RSA key pair used for encryption and authentication
+     */
+    private final KeyPair keyPair = SecurityUtils.generateKeyPair();
+    /**
+     * The network server used for network communication
+     */
+    private final GlowNetworkServer networkServer = new GlowNetworkServer(this);
+    /**
+     * A set of all online players.
+     */
+    private final Set<GlowPlayer> onlinePlayers = new HashSet<>();
+    /**
+     * A view of all online players.
+     */
+    private final Set<GlowPlayer> onlineView = Collections.unmodifiableSet(onlinePlayers);
+    /**
+     * The plugin type detector of thi server.
+     */
+    private GlowPluginTypeDetector pluginTypeDetector;
+    /**
+     * The server's default game mode
+     */
+    private GameMode defaultGameMode = GameMode.CREATIVE;
+    /**
+     * The setting for verbose deprecation warnings.
+     */
+    private Warning.WarningState warnState = Warning.WarningState.DEFAULT;
+    /**
+     * Whether the server is shutting down
+     */
+    private boolean isShuttingDown = false;
+    /**
+     * Whether the whitelist is in effect.
+     */
+    private boolean whitelistEnabled;
+    /**
+     * The size of the area to keep protected around the spawn point.
+     */
+    private int spawnRadius;
+    /**
+     * The ticks until a player who has not played the game has been kicked, or 0.
+     */
+    private int idleTimeout;
+    /**
+     * The query server for this server, or null if disabled.
+     */
+    private QueryServer queryServer;
+
+    /**
+     * The Rcon server for this server, or null if disabled.
+     */
+    private RconServer rconServer;
+
+    /**
+     * The default icon, usually blank, used for the server list.
+     */
+    private GlowServerIcon defaultIcon;
+
+    /**
+     * The server port.
+     */
+    private int port;
+    /**
+     * The {@link net.glowstone.block.MaterialValueManager} of this server.
+     */
+    private MaterialValueManager materialValueManager;
+
+    /**
+     * Creates a new server.
+     */
+    public GlowServer(ServerConfig config) {
+        this.materialValueManager = new BuiltinMaterialValueManager();
+
+        this.config = config;
+        // stuff based on selected config directory
+        opsList = new UuidListFile(config.getFile("ops.json"));
+        whitelist = new UuidListFile(config.getFile("whitelist.json"));
+        nameBans = new GlowBanList(this, BanList.Type.NAME);
+        ipBans = new GlowBanList(this, BanList.Type.IP);
+
+        Bukkit.setServer(this);
+        loadConfig();
+    }
 
     /**
      * Creates a new server on TCP port 25565 and starts listening for
@@ -236,198 +396,6 @@ public final class GlowServer implements Server {
         final File configFile = new File(configDir, configFileName);
 
         return new ServerConfig(configDir, configFile, parameters);
-    }
-
-    /**
-     * A list of all the active {@link net.glowstone.net.GlowSession}s.
-     */
-    private final SessionRegistry sessions = new SessionRegistry();
-
-    /**
-     * The console manager of this server.
-     */
-    private final ConsoleManager consoleManager = new ConsoleManager(this);
-
-    /**
-     * The services manager of this server.
-     */
-    private final SimpleServicesManager servicesManager = new SimpleServicesManager();
-
-    /**
-     * The command map of this server.
-     */
-    private final SimpleCommandMap commandMap = new SimpleCommandMap(this);
-
-    /**
-     * The plugin manager of this server.
-     */
-    private final SimplePluginManager pluginManager = new SimplePluginManager(this, commandMap);
-
-    /**
-     * The plugin type detector of thi server.
-     */
-    private GlowPluginTypeDetector pluginTypeDetector;
-
-    /**
-     * The plugin channel messenger for the server.
-     */
-    private final Messenger messenger = new StandardMessenger();
-
-    /**
-     * The help map for the server.
-     */
-    private final GlowHelpMap helpMap = new GlowHelpMap(this);
-
-    /**
-     * The scoreboard manager for the server.
-     */
-    private final GlowScoreboardManager scoreboardManager =   new GlowScoreboardManager(this);
-
-    /**
-     * The crafting manager for this server.
-     */
-    private final CraftingManager craftingManager = new CraftingManager();
-
-    /**
-     * The configuration for the server.
-     */
-    private final ServerConfig config;
-
-    /**
-     * The list of OPs on the server.
-     */
-    private final UuidListFile opsList;
-
-    /**
-     * The list of players whitelisted on the server.
-     */
-    private final UuidListFile whitelist;
-
-    /**
-     * The BanList for player names.
-     */
-    private final GlowBanList nameBans;
-
-    /**
-     * The BanList for IP addresses.
-     */
-    private final GlowBanList ipBans;
-
-    /**
-     * The EntityIdManager for this server.
-     */
-    private final EntityIdManager entityIdManager = new EntityIdManager();
-
-    /**
-     * The world this server is managing.
-     */
-    private final WorldScheduler worlds = new WorldScheduler();
-
-    /**
-     * The task scheduler used by this server.
-     */
-    private final GlowScheduler scheduler = new GlowScheduler(this, worlds);
-
-    /**
-     * The Bukkit UnsafeValues implementation.
-     */
-    private final UnsafeValues unsafeAccess = new GlowUnsafeValues();
-
-    /**
-     * An empty player array used for deprecated getOnlinePlayers.
-     */
-    private final Player[] emptyPlayerArray = new Player[0];
-
-    /**
-     * The server's default game mode
-     */
-    private GameMode defaultGameMode = GameMode.CREATIVE;
-
-    /**
-     * The setting for verbose deprecation warnings.
-     */
-    private Warning.WarningState warnState = Warning.WarningState.DEFAULT;
-
-    /**
-     * Whether the server is shutting down
-     */
-    private boolean isShuttingDown = false;
-
-    /**
-     * Whether the whitelist is in effect.
-     */
-    private boolean whitelistEnabled;
-
-    /**
-     * The size of the area to keep protected around the spawn point.
-     */
-    private int spawnRadius;
-
-    /**
-     * The ticks until a player who has not played the game has been kicked, or 0.
-     */
-    private int idleTimeout;
-
-    /**
-     * A RSA key pair used for encryption and authentication
-     */
-    private final KeyPair keyPair = SecurityUtils.generateKeyPair();
-
-    /**
-     * The network server used for network communication
-     */
-    private final GlowNetworkServer networkServer = new GlowNetworkServer(this);
-
-    /**
-     * The query server for this server, or null if disabled.
-     */
-    private QueryServer queryServer;
-
-    /**
-     * The Rcon server for this server, or null if disabled.
-     */
-    private RconServer rconServer;
-
-    /**
-     * The default icon, usually blank, used for the server list.
-     */
-    private GlowServerIcon defaultIcon;
-
-    /**
-     * The server port.
-     */
-    private int port;
-
-    /**
-     * A set of all online players.
-     */
-    private final Set<GlowPlayer> onlinePlayers = new HashSet<>();
-
-    /**
-     * A view of all online players.
-     */
-    private final Set<GlowPlayer> onlineView = Collections.unmodifiableSet(onlinePlayers);
-
-    /**
-     * The {@link net.glowstone.block.MaterialValueManager} of this server.
-     */
-    private MaterialValueManager materialValueManager;
-
-    /**
-     * Creates a new server.
-     */
-    public GlowServer(ServerConfig config) {
-        this.materialValueManager = new BuiltinMaterialValueManager();
-
-        this.config = config;
-        // stuff based on selected config directory
-        opsList = new UuidListFile(config.getFile("ops.json"));
-        whitelist = new UuidListFile(config.getFile("whitelist.json"));
-        nameBans = new GlowBanList(this, BanList.Type.NAME);
-        ipBans = new GlowBanList(this, BanList.Type.IP);
-
-        Bukkit.setServer(this);
-        loadConfig();
     }
 
     /**
@@ -699,7 +667,7 @@ public final class GlowServer implements Server {
         commandMap.register("glowstone", new BroadcastCommand());
         commandMap.register("glowstone", new SpeedCommand());
         //commandMap.register("glowstone", new HomeCommand());
-        //commandMap.register("glowstone", new TeleportCommand());
+        commandMap.register("glowstone", new TeleportCommand());
         /**commandMap.register("glowstone", new TeleportCommand());
         commandMap.register("glowstone", new SethomeCommand()); **/
 
@@ -892,6 +860,13 @@ public final class GlowServer implements Server {
         return whitelist;
     }
 
+    @Override
+    public void setWhitelist(boolean enabled) {
+        whitelistEnabled = enabled;
+        config.set(ServerConfig.Key.WHITELIST, whitelistEnabled);
+        config.save();
+    }
+
     /**
      * Returns the folder where configuration files are stored
      */
@@ -1011,6 +986,9 @@ public final class GlowServer implements Server {
         return config.getBoolean(ServerConfig.Key.ANNOUNCE_ACHIEVEMENTS);
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    // Static server properties
+
     /**
      * Sets a player as being online internally.
      * @param player player to set online/offline
@@ -1024,9 +1002,6 @@ public final class GlowServer implements Server {
             onlinePlayers.remove(player);
         }
     }
-
-    ////////////////////////////////////////////////////////////////////////////
-    // Static server properties
 
     @Override
     public String getName() {
@@ -1048,13 +1023,13 @@ public final class GlowServer implements Server {
         return logger;
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    // Access to Bukkit API
+
     @Override
     public boolean isPrimaryThread() {
         return scheduler.isPrimaryThread();
     }
-
-    ////////////////////////////////////////////////////////////////////////////
-    // Access to Bukkit API
 
     @Override
     public PluginManager getPluginManager() {
@@ -1102,6 +1077,9 @@ public final class GlowServer implements Server {
         return null;
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    // Commands and console
+
     @Override
     public BanList getBanList(BanList.Type type) {
         switch (type) {
@@ -1113,9 +1091,6 @@ public final class GlowServer implements Server {
                 throw new IllegalArgumentException("Unknown BanList type " + type);
         }
     }
-
-    ////////////////////////////////////////////////////////////////////////////
-    // Commands and console
 
     @Override
     public ConsoleCommandSender getConsoleSender() {
@@ -1146,6 +1121,9 @@ public final class GlowServer implements Server {
         return aliases;
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    // Player management
+
     @Override
     public boolean dispatchCommand(CommandSender sender, String commandLine) throws CommandException {
         if (commandMap.dispatch(sender, commandLine)) {
@@ -1160,9 +1138,6 @@ public final class GlowServer implements Server {
         sender.sendMessage(ChatColor.GRAY + "Unknown command \"" + firstword + "\", try \"help\"");
         return false;
     }
-
-    ////////////////////////////////////////////////////////////////////////////
-    // Player management
 
     @Override
     public Set<OfflinePlayer> getOperators() {
@@ -1357,6 +1332,9 @@ public final class GlowServer implements Server {
         ipBans.pardon(address);
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    // World management
+
     @Override
     public Set<OfflinePlayer> getBannedPlayers() {
         Set<OfflinePlayer> bannedPlayers = new HashSet<>();
@@ -1365,9 +1343,6 @@ public final class GlowServer implements Server {
         }
         return bannedPlayers;
     }
-
-    ////////////////////////////////////////////////////////////////////////////
-    // World management
 
     @Override
     public GlowWorld getWorld(String name) {
@@ -1467,13 +1442,13 @@ public final class GlowServer implements Server {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    // Inventory and crafting
+
     @Override
     public GlowMapView createMap(World world) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
-    ////////////////////////////////////////////////////////////////////////////
-    // Inventory and crafting
 
     @Override
     public List<Recipe> getRecipesFor(ItemStack result) {
@@ -1515,13 +1490,13 @@ public final class GlowServer implements Server {
         return new GlowInventory(owner, InventoryType.CHEST, size, title);
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    // Server icons
+
     @Override
     public Inventory createInventory(InventoryHolder owner, InventoryType type, String title) {
         return new GlowInventory(owner, type, type.getDefaultSize(), title);
     }
-
-    ////////////////////////////////////////////////////////////////////////////
-    // Server icons
 
     @Override
     public GlowServerIcon getServerIcon() {
@@ -1533,13 +1508,13 @@ public final class GlowServer implements Server {
         return new GlowServerIcon(file);
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    // Plugin messages
+
     @Override
     public CachedServerIcon loadServerIcon(BufferedImage image) throws Exception {
         return new GlowServerIcon(image);
     }
-
-    ////////////////////////////////////////////////////////////////////////////
-    // Plugin messages
 
     @Override
     public void sendPluginMessage(Plugin source, String channel, byte[] message) {
@@ -1549,6 +1524,9 @@ public final class GlowServer implements Server {
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    // Configuration with special handling
+
     @Override
     public Set<String> getListeningPluginChannels() {
         HashSet<String> result = new HashSet<>();
@@ -1557,9 +1535,6 @@ public final class GlowServer implements Server {
         }
         return result;
     }
-
-    ////////////////////////////////////////////////////////////////////////////
-    // Configuration with special handling
 
     @Override
     public GameMode getDefaultGameMode() {
@@ -1587,25 +1562,18 @@ public final class GlowServer implements Server {
     }
 
     @Override
-    public void setWhitelist(boolean enabled) {
-        whitelistEnabled = enabled;
-        config.set(ServerConfig.Key.WHITELIST, whitelistEnabled);
-        config.save();
-    }
-
-    @Override
     public Warning.WarningState getWarningState() {
         return warnState;
     }
 
     @Override
-    public void setIdleTimeout(int timeout) {
-        idleTimeout = timeout;
+    public int getIdleTimeout() {
+        return idleTimeout;
     }
 
     @Override
-    public int getIdleTimeout() {
-        return idleTimeout;
+    public void setIdleTimeout(int timeout) {
+        idleTimeout = timeout;
     }
 
     @Override
