@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class TeleportCommand extends BukkitCommand {
 
     public TeleportCommand() {
-        super("gseteleport");
+        super("bzteleport");
         this.description = "Teleports you to another player, or a player to another player";
         this.setPermission("glowstone.command.teleport");
         this.usageMessage = "/gsetp,gseteleport <target> [target2]";
