@@ -6,13 +6,16 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
+
 public class SpeedCommand extends BukkitCommand {
 
     public SpeedCommand() {
-        super("bzspeed");
+        super("bspeed");
         this.description = "Sets the speed of a player or yourself from";
-        this.usageMessage = "/bzspeed <player> <your speed>";
-        this.setPermission("glowstone.command.speed");
+        this.usageMessage = "/bspeed <player> <your speed>";
+        this.setPermission("blaze.command.speed");
+        this.setAliases(Arrays.<String>asList());
     }
 
     @SuppressWarnings("deprecation")

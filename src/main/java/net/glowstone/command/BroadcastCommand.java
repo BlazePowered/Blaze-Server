@@ -15,10 +15,10 @@ import java.util.Objects;
 public class BroadcastCommand extends BukkitCommand {
 
     public BroadcastCommand() {
-        super("bzbroadcast");
+        super("bbroadcast");
         this.description = "Announce preset messages server-wide!";
-        this.usageMessage = "/bzbroadcast <message> ...";
-        this.setPermission("glowstone.command.broadcast");
+        this.usageMessage = "/bbroadcast <message> ...";
+        this.setPermission("blaze.command.broadcast");
     }
 
     @Override

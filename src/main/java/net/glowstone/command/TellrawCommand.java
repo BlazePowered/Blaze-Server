@@ -19,7 +19,7 @@ public class TellrawCommand extends BukkitCommand {
                 "Send a private JSON message to the given player",
                 "/tellraw <player> <raw-json-message>",
                 Collections.<String>emptyList());
-        setPermission("glowstone.command.tellraw");
+        setPermission("blaze.command.tellraw");
     }
 
     @Override
