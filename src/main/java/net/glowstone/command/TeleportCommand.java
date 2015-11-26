@@ -44,3 +44,4 @@ public class TeleportCommand extends BukkitCommand {
     }
 
 }
+
