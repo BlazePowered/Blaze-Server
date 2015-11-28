@@ -1,7 +1,9 @@
 package net.glowstone.command;
 
+//import net.glowstone.GlowServer;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
+//import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
@@ -22,21 +24,25 @@ public class TeleportCommand extends BukkitCommand {
     @Override
     public boolean execute(CommandSender sender, String label, String[] args) {
 
-        Player player = (Player) sender;
-        if (args.length == 0) {
-            player.sendMessage(ChatColor.RED + usageMessage);
+        if (!(sender instanceof Player) &&  args.length == 1) {
+            sender.sendMessage(ChatColor.RED + "I'm sorry, but you can't teleport the console");
+        } else if (args.length == 0) {
+            sender.sendMessage(ChatColor.RED + usageMessage);
 
         } else if (args.length == 1) {
+            Player player = (Player) sender;
             Player targetPlayer = player.getServer().getPlayer(args[0]);
-            Location targetPlayerLocation = targetPlayer.getLocation();
-            player.teleport(targetPlayerLocation);
+            //Location targetPlayerLocation = targetPlayer.getLocation();
+            //player.teleport(targetPlayerLocation);
+            player.teleport(targetPlayer);
             sender.sendMessage(ChatColor.GOLD + "Teleporting...");
+            sender.sendMessage(ChatColor.GOLD + player.getUniqueId().toString());
             return true;
         } else if (args.length == 2) {
-            Player targetPlayer = player.getServer().getPlayer(args[0]);
-            Player targetPlayer1 = player.getServer().getPlayer(args[1]);
-            Location targetPlayer1Location = targetPlayer1.getLocation();
-            targetPlayer.teleport(targetPlayer1Location);
+            Player targetPlayer = Bukkit.getServer().getPlayer(args[0]);
+            Player targetPlayer1 = Bukkit.getServer().getPlayer(args[1]);
+            //Location targetPlayer1Location = targetPlayer1.getLocation();
+            targetPlayer.teleport(targetPlayer1);
             sender.sendMessage(ChatColor.GOLD + "Teleporting...");
             return true;
         }
